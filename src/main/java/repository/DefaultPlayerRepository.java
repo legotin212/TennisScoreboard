@@ -34,7 +34,7 @@ public class DefaultPlayerRepository implements PlayerRepository {
         Transaction transaction;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            player = session.createQuery("from Player where name = :name", Player.class).setParameter("name", name).uniqueResultOptional();
+            player = session.createQuery("from Players where name = :name", Player.class).setParameter("name", name).uniqueResultOptional();
             transaction.commit();
         }
         return player;
@@ -43,12 +43,12 @@ public class DefaultPlayerRepository implements PlayerRepository {
 
 
     @Override
-    public List<Player> findAll() {
-        List<Player> players = Collections.emptyList();
+    public List findAll() {
+        List players = Collections.emptyList();
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            players = session.createQuery("from Player").list();
+            players = session.createQuery("from Players").list();
             transaction.commit();
         }
         catch (Exception e) {

@@ -8,7 +8,7 @@ import java.io.IOException;
 public class UtfFIlter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        servletResponse.setContentType("application/json");
+        servletResponse.setContentType("text/html");
         servletResponse.setCharacterEncoding("UTF-8");
     }
 }

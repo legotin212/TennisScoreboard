@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "Players")
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
@@ -17,6 +18,7 @@ public class Player {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     @Column(name = "Name")
+
     private String name;
 
     public Player(String name) {

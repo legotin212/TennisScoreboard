@@ -1,5 +1,8 @@
-
-create table Players(ID int primary key GENERATED ALWAYS AS IDENTITY,Name Varchar(255) NOT NULL );
+CREATE SCHEMA db;
+CREATE TABLE Players (
+                         ID INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+                         Name VARCHAR(255) NOT NULL
+);
 
 create unique index unique_name on Players(Name);
 

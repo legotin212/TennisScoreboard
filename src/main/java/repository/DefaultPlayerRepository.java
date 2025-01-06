@@ -13,9 +13,10 @@ import java.util.Optional;
 
 public class DefaultPlayerRepository implements PlayerRepository {
 
+
     @Override
     public void save(Player player) {
-        Transaction transaction = null;
+        Transaction transaction = null;//Вынести в переменную класса?
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
             session.save(player);
@@ -43,12 +44,13 @@ public class DefaultPlayerRepository implements PlayerRepository {
 
 
     @Override
-    public List findAll() {
-        List players = Collections.emptyList();
+    public List<Player> findAll() {
+        List<Player> players = Collections.emptyList();
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+
             transaction = session.beginTransaction();
-            players = session.createQuery("from Players").list();
+            players = session.createQuery("from Players", Player.class).list();
             transaction.commit();
         }
         catch (Exception e) {

@@ -15,17 +15,17 @@ public class Match {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ID")
-    private Integer id;
+    private long id;
 
     @ManyToOne
-    @JoinColumn(name = "Player1", referencedColumnName = "ID", table = "Players")
+    @JoinColumn(name = "Player1", referencedColumnName = "ID")
     private  Player player1;
 
     @ManyToOne
-    @JoinColumn(name = "Player2", referencedColumnName = "ID", table = "Players")
+    @JoinColumn(name = "Player2", referencedColumnName = "ID")
     private  Player player2;
 
     @ManyToOne
-    @JoinColumn(name ="Winner", referencedColumnName = "ID", table = "Players")
+    @JoinColumn(name ="Winner", referencedColumnName = "ID")
     private  Player winner;
 }

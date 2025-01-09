@@ -2,10 +2,12 @@ package util;
 
 import entity.Player;
 import lombok.NoArgsConstructor;
+import lombok.experimental.UtilityClass;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 @NoArgsConstructor
+@UtilityClass
 public class HibernateUtil {
     private static final SessionFactory sessionFactory;
 

@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.UUID;
 
 @WebServlet("/new-match")
-public class newMatchController extends HttpServlet {
+public class NewMatchController extends HttpServlet {
     private  MatchService matchService;
     @Override
     public void init() throws ServletException {

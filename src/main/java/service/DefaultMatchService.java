@@ -11,7 +11,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class DefaultMatchService implements MatchService{
-    private final Map<UUID,OngoingMatch> matches = new ConcurrentHashMap<>();
+    private static final Map<UUID,OngoingMatch> matches = new ConcurrentHashMap<>();
     private final PlayerRepository playerRepository;
     private static DefaultMatchService instance;
 
@@ -38,8 +38,15 @@ public class DefaultMatchService implements MatchService{
 
         ///  тут нужно создать объект класса который содержит айди игроков, и счет
         /// счет тоже реализовать как класс???
-        OngoingMatch newMatch = new OngoingMatch(UUID.randomUUID(), playerOneId, playerTwoId, new Score()); ///создавать фабрикой счет
+        OngoingMatch newMatch = new OngoingMatch(UUID.randomUUID(), playerOneId, playerTwoId, new Score());
         matches.put(newMatch.getUuid(), newMatch);
         return newMatch.getUuid();
+    }
+
+    public OngoingMatch getOngoingMatch(UUID matchId) {
+        if(matches.containsKey(matchId)) {
+            return matches.get(matchId);
+        }
+        throw new IllegalArgumentException("Match not found");
     }
 }

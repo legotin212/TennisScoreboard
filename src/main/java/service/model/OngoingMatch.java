@@ -1,16 +1,73 @@
 package service.model;
 
-import entity.Match;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.Map;
 import java.util.UUID;
 
-@AllArgsConstructor
-@Getter
 public class OngoingMatch {
+    @Getter
     private final UUID uuid;
-    private final long PlayerOneID;
-    private final long PlayerTwoID;
-    private final Score score;
+    private final Map<Integer,Score> playerScores;
+    private final Integer playerOneId;
+    private final Integer playerTwoId;
+
+    private boolean isGameDeuce;
+    private boolean isTieBreak;
+
+    public OngoingMatch(UUID matchUUID, Integer playerOneUUID, Integer playerTwoUUID) {
+        this.uuid = matchUUID;
+        this.playerScores = Map.of(
+                playerOneUUID, new Score(),
+                playerTwoUUID, new Score()
+        );
+        this.playerOneId = playerOneUUID;
+        this.playerTwoId = playerTwoUUID;
+    }
+
+    public Score getPlayerScoreById(Integer playerId) {
+        return playerScores.get(playerId);
+    }
+
+    public Score getOpponentScoreByPlayerId(Integer playerId) {
+       if(playerId.equals(playerOneId)){
+           return getPlayerScoreById(playerTwoId);
+       }
+       return getPlayerScoreById(playerOneId);
+    }
+
+    public void setGameDeuce() {
+        this.isGameDeuce = true;
+    }
+
+    public void setTieBreak() {
+        this.isTieBreak = true;
+    }
+
+    public  void endGameDeuce(){
+        this.isGameDeuce = false;
+    }
+
+    public void endTieBreak(){
+        this.isTieBreak = false;
+    }
+
+    public boolean isGameDeuce() {
+        return isGameDeuce;
+    }
+
+    public boolean isTieBreak() {
+        return isTieBreak;
+    }
+
+    public Score getPlayerOneScore(){
+        return playerScores.get(playerOneId);
+    }
+
+    public Score getPlayerTwoScore(){
+        return playerScores.get(playerTwoId);
+    }
+
+
+
 }

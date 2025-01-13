@@ -15,14 +15,14 @@ public class OngoingMatch {
     private boolean isGameDeuce;
     private boolean isTieBreak;
 
-    public OngoingMatch(UUID matchUUID, Integer playerOneUUID, Integer playerTwoUUID) {
+    public OngoingMatch(UUID matchUUID, Integer playerOneID, Integer playerTwoID) {
         this.uuid = matchUUID;
         this.playerScores = Map.of(
-                playerOneUUID, new Score(),
-                playerTwoUUID, new Score()
+                playerOneID, new Score(),
+                playerTwoID, new Score()
         );
-        this.playerOneId = playerOneUUID;
-        this.playerTwoId = playerTwoUUID;
+        this.playerOneId = playerOneID;
+        this.playerTwoId = playerTwoID;
     }
 
     public Score getPlayerScoreById(Integer playerId) {

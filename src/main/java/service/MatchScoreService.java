@@ -1,13 +1,13 @@
 package service;
 
+import lombok.NoArgsConstructor;
+import service.factory.MatchServiceFactory;
 import service.model.OngoingMatch;
 import service.model.Score;
 
 import java.util.UUID;
-
+@NoArgsConstructor
 public class MatchScoreService {
-
-    private final MatchService matchService = DefaultMatchService.getInstance();
 
     private static final int POINTS_TO_DEUCE = 3;
     private static final int ZERO = 0;
@@ -20,9 +20,8 @@ public class MatchScoreService {
     private Score winner;
     private Score looser;
 
-    public void addPointToPlayer(UUID matchId, Integer playerId) {
-        OngoingMatch currentMatch = matchService.getOngoingMatch(matchId) ;
-        initScores(currentMatch, playerId);
+    public void addPointToPlayer(OngoingMatch currentMatch, Integer playerId) {
+        initializeScores(currentMatch, playerId);
         addPoint(currentMatch, playerId);
     }
 
@@ -75,14 +74,16 @@ public class MatchScoreService {
     private void addSet(OngoingMatch currentMatch, Integer playerId){
         winner.increasePlayerSet();
         if (winner.getPlayerSet() == SETS_TO_WIN_MATCH){
-            matchService.endGame(currentMatch);
+//            matchService.endGame(currentMatch, playerId);
         }
     }
+
     private void addPointToGameDeuce(OngoingMatch currentMatch, Integer playerId){
 
         if(winner.getPlayerPoint() > looser.getPlayerPoint()){
             resetPoints(currentMatch);
             addGame(currentMatch, playerId);
+            currentMatch.endGameDeuce();
             return;
         }
 
@@ -116,8 +117,8 @@ public class MatchScoreService {
 
     }
 
-    private void initScores(OngoingMatch currentMatch, Integer playerId){
-        Score winner = currentMatch.getPlayerScoreById(playerId);
-        Score looser = currentMatch.getOpponentScoreByPlayerId(playerId);
+    private void initializeScores(OngoingMatch currentMatch, Integer playerId){
+         winner = currentMatch.getPlayerScoreById(playerId);
+         looser = currentMatch.getOpponentScoreByPlayerId(playerId);
     }
 }

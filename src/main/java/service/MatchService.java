@@ -5,7 +5,7 @@ import service.model.OngoingMatch;
 import java.util.UUID;
 
 public interface MatchService {
-    UUID createMatch(String player1, String player2);
+    UUID createMatch(Integer playerOneId, Integer playerTwoId);
     OngoingMatch getOngoingMatch(UUID matchId);
     void endMatch(OngoingMatch match, Integer winnerId);
 }

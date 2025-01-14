@@ -30,14 +30,7 @@ public class DefaultMatchService implements MatchService{
     }
 
     @Override
-    public UUID createMatch(String playerOne, String playerTwo) {
-        playerRepository.save(new Player(playerOne));
-        playerRepository.save(new Player(playerTwo)); /// Сохраняет если игрока не было либо ничего не делает если уже был благодаря юник индексу бд
-
-        /// теперь получаем айдишки игроков который в любом случае должны быть в бд
-        Integer playerOneId = playerRepository.findByName(playerOne).get().getId();
-        Integer playerTwoId = playerRepository.findByName(playerTwo).get().getId();
-
+    public UUID createMatch(Integer playerOneId, Integer playerTwoId) {
         OngoingMatch newMatch = new OngoingMatch(UUID.randomUUID(), playerOneId, playerTwoId);
         matches.put(newMatch.getUuid(), newMatch);
         return newMatch.getUuid();
@@ -53,12 +46,8 @@ public class DefaultMatchService implements MatchService{
 
     @Override
     public void endMatch(OngoingMatch endedMatch, Integer winnerId) {
-        //нужно закрыть для запросов матч -> удалить его из коллекции
         matches.remove(endedMatch.getUuid());
-
-        // нужно замапить онгоинг матч в матч
         Match match = mapOngoingMatchToMatch(endedMatch, winnerId);
-        // нужно сохранить матч в бд
         matchRepository.saveMatch(match);
     }
 
@@ -72,8 +61,10 @@ public class DefaultMatchService implements MatchService{
             result.setPlayer1(playerOne.get());
             result.setPlayer2(playerOne.get());
             result.setWinner(playerOne.get());
+            return result;
         }
+        throw new IllegalArgumentException("Player not found");
         /// Исправить
-        return result;
+
     }
 }

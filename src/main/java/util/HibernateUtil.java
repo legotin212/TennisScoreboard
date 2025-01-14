@@ -2,9 +2,8 @@ package util;
 
 import entity.Player;
 import lombok.NoArgsConstructor;
-import lombok.experimental.UtilityClass;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
 @NoArgsConstructor
 
@@ -23,7 +22,7 @@ public class HibernateUtil {
         }
     }
 
-    public static SessionFactory getSessionFactory() {
-        return sessionFactory;
+    public static Session getSession() {
+        return sessionFactory.getCurrentSession();
     }
 }

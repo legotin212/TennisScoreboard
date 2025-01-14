@@ -17,7 +17,7 @@ public class DefaultPlayerRepository implements PlayerRepository {
     @Override
     public void save(Player player) {
         Transaction transaction = null;//Вынести в переменную класса?
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
             session.save(player);
             transaction.commit();
@@ -33,7 +33,7 @@ public class DefaultPlayerRepository implements PlayerRepository {
     public Optional<Player> findByName(String name) {
         Optional<Player> player;
         Transaction transaction;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
             player = session.createQuery("from Players where name = :name", Player.class).setParameter("name", name).uniqueResultOptional();
             transaction.commit();
@@ -47,7 +47,7 @@ public class DefaultPlayerRepository implements PlayerRepository {
     public List<Player> findAll() {
         List<Player> players = Collections.emptyList();
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSession()) {
 
             transaction = session.beginTransaction();
             players = session.createQuery("from Players", Player.class).list();
@@ -59,5 +59,18 @@ public class DefaultPlayerRepository implements PlayerRepository {
             }
         }
         return players;
+    }
+
+    @Override
+    public Optional<Player> findById(Integer id) {
+        Optional<Player> player;
+        Transaction transaction;
+        try (Session session = HibernateUtil.getSession()) {
+            transaction = session.beginTransaction();
+            player = session.createQuery("from Players where id = :id", Player.class).setParameter("id", id).uniqueResultOptional();
+            transaction.commit();
+        }
+
+        return player;
     }
 }

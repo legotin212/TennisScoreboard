@@ -9,7 +9,9 @@ public class OngoingMatch {
     @Getter
     private final UUID uuid;
     private final Map<Integer,Score> playerScores;
+    @Getter
     private final Integer playerOneId;
+    @Getter
     private final Integer playerTwoId;
 
     private boolean isGameDeuce;

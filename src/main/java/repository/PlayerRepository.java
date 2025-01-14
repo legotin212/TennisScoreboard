@@ -10,5 +10,6 @@ public interface PlayerRepository {
     void save(Player player);
     Optional<Player> findByName(String name);
     List<Player> findAll();
+    Optional<Player> findById(Integer id);
 
 }

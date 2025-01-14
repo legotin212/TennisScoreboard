@@ -35,7 +35,7 @@ public class MatchScoreServiceTest {
 
         matchScoreService.addPointToPlayer(ongoingMatch,1);
 
-        assertEquals(true, ongoingMatch.isGameDeuce());
+        assertTrue(ongoingMatch.isGameDeuce());
         assertEquals(1, ongoingMatch.getPlayerScoreById(1).getPlayerPoint());
         assertEquals(0, ongoingMatch.getOpponentScoreByPlayerId(1).getPlayerPoint());
     }
@@ -48,7 +48,7 @@ public class MatchScoreServiceTest {
 
         matchScoreService.addPointToPlayer(ongoingMatch,1);
 
-        assertEquals(false, ongoingMatch.isGameDeuce());
+        assertFalse(ongoingMatch.isGameDeuce());
         assertEquals(1, ongoingMatch.getPlayerScoreById(1).getPlayerGame());
         assertEquals(0, ongoingMatch.getPlayerScoreById(1).getPlayerPoint());
     }
@@ -73,7 +73,7 @@ public class MatchScoreServiceTest {
 
         matchScoreService.addPointToPlayer(ongoingMatch, 1);
 
-        assertEquals(true, ongoingMatch.isTieBreak());
+        assertTrue(ongoingMatch.isTieBreak());
         assertEquals(0, ongoingMatch.getPlayerOneScore().getPlayerSet());
         assertEquals(1,ongoingMatch.getPlayerOneScore().getPlayerGame());
         assertEquals(0,ongoingMatch.getPlayerTwoScore().getPlayerGame());

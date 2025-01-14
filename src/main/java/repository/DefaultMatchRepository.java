@@ -12,7 +12,8 @@ public class DefaultMatchRepository implements MatchRepository {
     @Override
     public void saveMatch(Match match) {
         Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+        try (Session session = HibernateUtil.getSession()) {
+
             transaction = session.beginTransaction();
             session.save(match);
             transaction.commit();

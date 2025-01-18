@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page isELIgnored="false" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -21,8 +22,8 @@
         </div>
         <div>
             <nav class="nav-links">
-                <a class="nav-link" href="#">Home</a>
-                <a class="nav-link" href="#">Matches</a>
+                <a class="nav-link" href="./">Home</a>
+                <a class="nav-link" href="matches">Matches</a>
             </nav>
         </div>
     </section>
@@ -44,22 +45,31 @@
                 <tbody>
                 <!-- Данные для игрока 1 -->
                 <tr class="player1">
-                    <td class="table-text">${player1.name}</td>
-                    <td class="table-text">${player1.sets}</td>
-                    <td class="table-text">${player1.games}</td>
-                    <td class="table-text">${player1.points}</td>
+                    <td class="table-text">${playerScores.playerOneName}</td>
+                    <td class="table-text">${playerScores.score.playerOneSet}</td>
+                    <td class="table-text">${playerScores.score.playerOneGame}</td>
+                    <td class="table-text">${playerScores.score.playerOnePoint}</td>
                     <td class="table-text">
-                        <div class="score-btn">Score</div>
+                    </td>
+                    <td class="table-text">
+                        <form method="post" action="${pageContext.request.contextPath}/match-score?matchUUID=${requestScope.matchUUID}">
+                            <input type="hidden" name="playerId" value="${requestScope.playerScores.playerOneId}">
+                            <button class="score-btn" type="submit">Score</button>
+                        </form>
                     </td>
                 </tr>
                 <!-- Данные для игрока 2 -->
                 <tr class="player2">
-                    <td class="table-text">${player2.name}</td>
-                    <td class="table-text">${player2.sets}</td>
-                    <td class="table-text">${player2.games}</td>
-                    <td class="table-text">${player2.points}</td>
+                    <td class="table-text">${playerScores.playerTwoName}</td>
+                    <td class="table-text">${playerScores.score.playerTwoSet}</td>
+                    <td class="table-text">${playerScores.score.playerTwoGame}</td>
+                    <td class="table-text">${playerScores.score.playerTwoPoint}</td>
+                    </td>
                     <td class="table-text">
-                        <div class="score-btn">Score</div>
+                        <form method="post" action="${pageContext.request.contextPath}/match-score?matchUUID=${requestScope.matchUUID}">
+                            <input type="hidden" name="playerId" value="${requestScope.playerScores.playerTwoId}">
+                            <button class="score-btn" type="submit">Score</button>
+                        </form>
                     </td>
                 </tr>
                 </tbody>

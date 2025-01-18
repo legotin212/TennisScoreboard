@@ -10,7 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter
-@Getter
+
 @ToString
 public class Player {
     @Id
@@ -23,5 +23,13 @@ public class Player {
 
     public Player(String name) {
         this.name = name;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Integer getId() {
+        return id;
     }
 }

@@ -23,13 +23,11 @@ public class NewMatchServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        System.out.println("NewMatchController");
         req.getRequestDispatcher("/new-match.html").forward(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
         String firstPlayerName = req.getParameter("playerOne");
         String secondPlayerName = req.getParameter("playerTwo");
 
@@ -44,7 +42,8 @@ public class NewMatchServlet extends HttpServlet {
 
         UUID matchUUID = matchService.createMatch(playerOneID, playerTwoID);
 
-        resp.sendRedirect("/match-score?matchUUID=" + matchUUID);
+        resp.sendRedirect(req.getContextPath() + "/match-score?matchUUID=" + matchUUID);
+
 
     }
 }

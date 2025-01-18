@@ -4,6 +4,7 @@ import entity.Player;
 import repository.DefaultPlayerRepository;
 import repository.PlayerRepository;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 
 public class DefaultPlayerService implements PlayerService {
@@ -13,6 +14,7 @@ public class DefaultPlayerService implements PlayerService {
     }
 
     @Override
+    @Transactional
     public void createIfNotExists(String playerName) {
         Optional<Player> player = playerRepository.findByName(playerName);
         if (player.isEmpty()) {

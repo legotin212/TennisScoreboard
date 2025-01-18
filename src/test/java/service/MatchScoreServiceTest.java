@@ -20,63 +20,63 @@ public class MatchScoreServiceTest {
 
     @Test
     void testAddPoint_PlayerOneScores_NormalGame(){
-        ongoingMatch.getPlayerOneScore().setPlayerPoint(1);
-        ongoingMatch.getPlayerTwoScore().setPlayerPoint(2);
+        ongoingMatch.getPlayerOneScore().setPoint(1);
+        ongoingMatch.getPlayerTwoScore().setPoint(2);
 
         matchScoreService.addPointToPlayer(ongoingMatch,1);
 
-        assertEquals(2, ongoingMatch.getPlayerScoreById(1).getPlayerPoint());
+        assertEquals(2, ongoingMatch.getPlayerScoreById(1).getPoint());
     }
 
     @Test
     void testAddPoint_GameReachesDeuceAtFortyForty(){
-        ongoingMatch.getPlayerOneScore().setPlayerPoint(3);
-        ongoingMatch.getPlayerTwoScore().setPlayerPoint(3);
+        ongoingMatch.getPlayerOneScore().setPoint(3);
+        ongoingMatch.getPlayerTwoScore().setPoint(3);
 
         matchScoreService.addPointToPlayer(ongoingMatch,1);
 
         assertTrue(ongoingMatch.isGameDeuce());
-        assertEquals(1, ongoingMatch.getPlayerScoreById(1).getPlayerPoint());
-        assertEquals(0, ongoingMatch.getOpponentScoreByPlayerId(1).getPlayerPoint());
+        assertEquals(1, ongoingMatch.getPlayerScoreById(1).getPoint());
+        assertEquals(0, ongoingMatch.getOpponentScoreByPlayerId(1).getPoint());
     }
 
     @Test
     void testAddPoint_WinnerWithAdvantageShouldWinGame(){
-        ongoingMatch.getPlayerScoreById(1).setPlayerPoint(1);
-        ongoingMatch.getOpponentScoreByPlayerId(1).setPlayerPoint(0);
+        ongoingMatch.getPlayerScoreById(1).setPoint(1);
+        ongoingMatch.getOpponentScoreByPlayerId(1).setPoint(0);
         ongoingMatch.setGameDeuce();
 
         matchScoreService.addPointToPlayer(ongoingMatch,1);
 
         assertFalse(ongoingMatch.isGameDeuce());
-        assertEquals(1, ongoingMatch.getPlayerScoreById(1).getPlayerGame());
-        assertEquals(0, ongoingMatch.getPlayerScoreById(1).getPlayerPoint());
+        assertEquals(1, ongoingMatch.getPlayerScoreById(1).getGame());
+        assertEquals(0, ongoingMatch.getPlayerScoreById(1).getPoint());
     }
 
     @Test
     void testAdvantageLostWhenOpponentScores(){
-        ongoingMatch.getPlayerScoreById(1).setPlayerPoint(0);
-        ongoingMatch.getOpponentScoreByPlayerId(1).setPlayerPoint(1);
+        ongoingMatch.getPlayerScoreById(1).setPoint(0);
+        ongoingMatch.getOpponentScoreByPlayerId(1).setPoint(1);
         ongoingMatch.setGameDeuce();
 
         matchScoreService.addPointToPlayer(ongoingMatch,1);
 
-        assertEquals(0, ongoingMatch.getOpponentScoreByPlayerId(1).getPlayerPoint());
+        assertEquals(0, ongoingMatch.getOpponentScoreByPlayerId(1).getPoint());
     }
 
     @Test
     void testTieBreakStartsWhenSetScoreIsSixSix(){
-        ongoingMatch.getPlayerOneScore().setPlayerPoint(3);
-        ongoingMatch.getPlayerTwoScore().setPlayerPoint(0);
-        ongoingMatch.getPlayerOneScore().setPlayerGame(6);
-        ongoingMatch.getPlayerTwoScore().setPlayerGame(6);
+        ongoingMatch.getPlayerOneScore().setPoint(3);
+        ongoingMatch.getPlayerTwoScore().setPoint(0);
+        ongoingMatch.getPlayerOneScore().setGame(6);
+        ongoingMatch.getPlayerTwoScore().setGame(6);
 
         matchScoreService.addPointToPlayer(ongoingMatch, 1);
 
         assertTrue(ongoingMatch.isTieBreak());
-        assertEquals(0, ongoingMatch.getPlayerOneScore().getPlayerSet());
-        assertEquals(1,ongoingMatch.getPlayerOneScore().getPlayerGame());
-        assertEquals(0,ongoingMatch.getPlayerTwoScore().getPlayerGame());
+        assertEquals(0, ongoingMatch.getPlayerOneScore().getSet());
+        assertEquals(1,ongoingMatch.getPlayerOneScore().getGame());
+        assertEquals(0,ongoingMatch.getPlayerTwoScore().getGame());
 
     }
 

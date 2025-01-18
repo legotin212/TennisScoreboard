@@ -1,25 +1,24 @@
 package service.model;
 
-import lombok.Getter;
 import lombok.Setter;
 
-@Getter
+
 @Setter
 public class Score {
 
-    private int playerPoint;
-    private int playerGame;
-    private int playerSet;
+    private int point;
+    private int game;
+    private int set;
 
     private static final int DEFAULT_PLAYER_POINT = 0;
     private static final int DEFAULT_PLAYER_GAME = 0;
     private static final int DEFAULT_PLAYER_SET = 0;
 
 
-    private Score(int playerPoint, int playerGame, int playerSet) {
-        this.playerPoint = playerPoint;
-        this.playerGame = playerGame;
-        this.playerSet = playerSet;
+    private Score(int point, int game, int set) {
+        this.point = point;
+        this.game = game;
+        this.set = set;
     }
 
     public Score() {
@@ -30,15 +29,25 @@ public class Score {
    }
 
    public void increasePlayerPoint() {
-        playerPoint++;
+        point++;
    }
 
    public void increasePlayerGame() {
-        playerGame++;
+        game++;
    }
    public void increasePlayerSet() {
-        playerSet++;
+        set++;
    }
 
+    public int getSet() {
+        return set;
+    }
 
+    public int getGame() {
+        return game;
+    }
+
+    public int getPoint() {
+        return point;
+    }
 }

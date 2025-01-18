@@ -2,6 +2,7 @@ package repository;
 
 
 import entity.Player;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import util.HibernateUtil;
@@ -16,30 +17,24 @@ public class DefaultPlayerRepository implements PlayerRepository {
 
     @Override
     public void save(Player player) {
-        Transaction transaction = null;//Вынести в переменную класса?
         try (Session session = HibernateUtil.getSession()) {
-            transaction = session.beginTransaction();
-            session.save(player);
+            Transaction transaction = session.beginTransaction();
+            session.persist(player);
             transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            throw new RuntimeException("Failed to save player", e);
+        } catch (HibernateException e) {
+            throw new RuntimeException("Database error!");
         }
     }
 
     @Override
     public Optional<Player> findByName(String name) {
-        Optional<Player> player;
-        Transaction transaction;
-        try (Session session = HibernateUtil.getSession()) {
-            transaction = session.beginTransaction();
-            player = session.createQuery("from Players where name = :name", Player.class).setParameter("name", name).uniqueResultOptional();
-            transaction.commit();
-        }
-        return player;
+        String hql = "From Player where name = :name";
 
+        try (Session session = HibernateUtil.getSession()) {
+            return session.createQuery(hql, Player.class).setParameter("name", name).uniqueResultOptional();
+        } catch (HibernateException e) {
+            throw new RuntimeException("Database error!");
+        }
     }
 
 
@@ -50,13 +45,11 @@ public class DefaultPlayerRepository implements PlayerRepository {
         try (Session session = HibernateUtil.getSession()) {
 
             transaction = session.beginTransaction();
-            players = session.createQuery("from Players", Player.class).list();
+            players = session.createQuery("from Player", Player.class).list();
             transaction.commit();
         }
         catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
+
         }
         return players;
     }
@@ -67,7 +60,7 @@ public class DefaultPlayerRepository implements PlayerRepository {
         Transaction transaction;
         try (Session session = HibernateUtil.getSession()) {
             transaction = session.beginTransaction();
-            player = session.createQuery("from Players where id = :id", Player.class).setParameter("id", id).uniqueResultOptional();
+            player = session.createQuery("from Player where id = :id", Player.class).setParameter("id", id).uniqueResultOptional();
             transaction.commit();
         }
 

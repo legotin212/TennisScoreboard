@@ -5,7 +5,6 @@ import service.factory.MatchServiceFactory;
 import service.model.OngoingMatch;
 import service.model.Score;
 
-import java.util.UUID;
 @NoArgsConstructor
 public class MatchScoreService {
 
@@ -32,13 +31,13 @@ public class MatchScoreService {
              return;
        }
 
-       if(winner.getPlayerPoint() == POINTS_TO_DEUCE && looser.getPlayerPoint() == POINTS_TO_DEUCE) {
+       if(winner.getPoint() == POINTS_TO_DEUCE && looser.getPoint() == POINTS_TO_DEUCE) {
            currentMatch.setGameDeuce();
            addPointToGameDeuce(currentMatch, playerId);
            return;
        }
        
-       if(winner.getPlayerPoint() == POINTS_TO_DEUCE && looser.getPlayerPoint() < POINTS_TO_DEUCE){
+       if(winner.getPoint() == POINTS_TO_DEUCE && looser.getPoint() < POINTS_TO_DEUCE){
             addGame(currentMatch, playerId);
             resetPoints(currentMatch);
             return;
@@ -55,14 +54,14 @@ public class MatchScoreService {
             return;
         }
 
-        if(winner.getPlayerGame() == GAMES_TO_WIN_SET && looser.getPlayerGame() == GAMES_TO_WIN_SET){
+        if(winner.getGame() == GAMES_TO_WIN_SET && looser.getGame() == GAMES_TO_WIN_SET){
             currentMatch.setTieBreak();
             resetGames(currentMatch);
             addPointToTieBreak(currentMatch, playerId);
             return;
         }
 
-        if(winner.getPlayerGame() == GAMES_TO_TIE_BREAK && looser.getPlayerGame() < GAMES_TO_TIE_BREAK  ){
+        if(winner.getGame() == GAMES_TO_TIE_BREAK && looser.getGame() < GAMES_TO_TIE_BREAK  ){
             resetGames(currentMatch);
             addSet(currentMatch, playerId);
             return;
@@ -73,7 +72,7 @@ public class MatchScoreService {
 
     private void addSet(OngoingMatch currentMatch, Integer playerId){
         winner.increasePlayerSet();
-        if (winner.getPlayerSet() == SETS_TO_WIN_MATCH){
+        if (winner.getSet() == SETS_TO_WIN_MATCH){
             MatchService matchService = MatchServiceFactory.getMatchService();
             matchService.endMatch(currentMatch, playerId);
         }
@@ -81,14 +80,14 @@ public class MatchScoreService {
 
     private void addPointToGameDeuce(OngoingMatch currentMatch, Integer playerId){
 
-        if(winner.getPlayerPoint() > looser.getPlayerPoint()){
+        if(winner.getPoint() > looser.getPoint()){
             resetPoints(currentMatch);
             addGame(currentMatch, playerId);
             currentMatch.endGameDeuce();
             return;
         }
 
-        if(winner.getPlayerPoint() == looser.getPlayerPoint()){
+        if(winner.getPoint() == looser.getPoint()){
             resetPoints(currentMatch);
         }
         winner.increasePlayerPoint();
@@ -99,7 +98,7 @@ public class MatchScoreService {
 
         winner.increasePlayerGame();
 
-        if(winner.getPlayerGame() >= POINTS_TO_WIN_TIE_BREAK && looser.getPlayerGame() <= winner.getPlayerGame() - DIFF_TO_WIN_TIE_BREAK){
+        if(winner.getGame() >= POINTS_TO_WIN_TIE_BREAK && looser.getGame() <= winner.getGame() - DIFF_TO_WIN_TIE_BREAK){
             resetGames(currentMatch);
             currentMatch.endTieBreak();
             addSet(currentMatch, playerId);
@@ -108,13 +107,13 @@ public class MatchScoreService {
     }
 
     private void resetPoints(OngoingMatch currentMatch){
-        currentMatch.getPlayerOneScore().setPlayerPoint(ZERO);
-        currentMatch.getPlayerTwoScore().setPlayerPoint(ZERO);
+        currentMatch.getPlayerOneScore().setPoint(ZERO);
+        currentMatch.getPlayerTwoScore().setPoint(ZERO);
     }
 
     private void resetGames(OngoingMatch currentMatch){
-        currentMatch.getPlayerOneScore().setPlayerGame(ZERO);
-        currentMatch.getPlayerTwoScore().setPlayerGame(ZERO);
+        currentMatch.getPlayerOneScore().setGame(ZERO);
+        currentMatch.getPlayerTwoScore().setGame(ZERO);
 
     }
 

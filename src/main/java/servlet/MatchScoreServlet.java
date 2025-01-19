@@ -31,10 +31,10 @@ public class MatchScoreServlet extends HttpServlet {
         request.setAttribute("playerScores", score);
         request.setAttribute("matchUUID", matchUUID);
 
-
         RequestDispatcher dispatcher = request.getRequestDispatcher("match-score.jsp" );
         dispatcher.forward(request, response);
-        }
+
+    }
 
 
     @Override

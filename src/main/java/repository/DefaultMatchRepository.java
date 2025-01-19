@@ -37,17 +37,18 @@ public class DefaultMatchRepository implements MatchRepository {
     public Optional<Match> findByID(long id) {
         return Optional.empty();
     }
+
     @Override
     public List<Match> findByPlayerName(String playerName) {
         Transaction transaction = null;
         List<Match> matches = new ArrayList<>();
         try (Session session = HibernateUtil.getSession()) {
             String hql = """
-            SELECT m 
-            FROM Match m
-            JOIN Player p1 ON m.player1 = p1.id
-            JOIN Player p2 ON m.player2 = p2.id
-            WHERE p1.name LIKE :playerName OR p2.name LIKE :playerName
+        SELECT m 
+        FROM Match m
+        JOIN Player p1 ON m.player1 = p1.id
+        JOIN Player p2 ON m.player2 = p2.id
+        WHERE lower(p1.name) LIKE lower(:playerName) OR lower(p2.name) LIKE lower(:playerName)
         """;
             matches = session.createQuery(hql, Match.class)
                     .setParameter("playerName", playerName + "%") // Поиск имен, начинающихся с 'playerName'

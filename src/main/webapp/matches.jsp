@@ -1,3 +1,6 @@
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page isELIgnored="false" %>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -7,8 +10,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-
-    <script src="js/app.js"></script>
 </head>
 
 <body>
@@ -28,6 +29,7 @@
         </div>
     </section>
 </header>
+
 <main>
     <div class="container">
         <h1>Matches</h1>
@@ -46,42 +48,31 @@
                 <th>Player Two</th>
                 <th>Winner</th>
             </tr>
-            <tr>
-                <td>Rafael Nadal</td>
-                <td>Roger Federer</td>
-                <td><span class="winner-name-td">Rafael Nadal</span></td>
-            </tr>
-            <tr>
-                <td>Rafael Nadal</td>
-                <td>Roger Federer</td>
-                <td><span class="winner-name-td">Roger Federer</span></td>
-            </tr>
-            <tr>
-                <td>Rafael Nadal</td>
-                <td>Roger Federer</td>
-                <td><span class="winner-name-td">Rafael Nadal</span></td>
-            </tr>
-            <tr>
-                <td>Rafael Nadal</td>
-                <td>Roger Federer</td>
-                <td><span class="winner-name-td">Roger Federer</span></td>
-            </tr>
-            <tr>
-                <td>Rafael Nadal</td>
-                <td>Roger Federer</td>
-                <td><span class="winner-name-td">Rafael Nadal</span></td>
-            </tr>
+            <c:forEach var="match" items="${matches}">
+                <tr>
+                    <td>${match.playerOne}</td>
+                    <td>${match.playerTwo}</td>
+                    <td><span class="winner-name-td">${match.winner}</span></td>
+                </tr>
+            </c:forEach>
         </table>
 
         <div class="pagination">
-            <a class="prev" href="#"> < </a>
-            <a class="num-page current" href="#">1</a>
-            <a class="num-page" href="#">2</a>
-            <a class="num-page" href="#">3</a>
-            <a class="next" href="#"> > </a>
+            <c:if test="${currentPage > 1}">
+                <a class="prev" href="matches?page=${currentPage - 1}"> < </a>
+            </c:if>
+
+            <c:forEach var="i" begin="1" end="${totalPages}">
+                <a class="num-page ${i == currentPage ? 'current' : ''}" href="matches?page=${i}">${i}</a>
+            </c:forEach>
+
+            <c:if test="${currentPage < totalPages}">
+                <a class="next" href="matches?page=${currentPage + 1}"> > </a>
+            </c:if>
         </div>
     </div>
 </main>
+
 <footer>
     <div class="footer">
         <p>&copy; Tennis Scoreboard, project from <a href="https://zhukovsd.github.io/java-backend-learning-course/">zhukovsd/java-backend-learning-course</a>

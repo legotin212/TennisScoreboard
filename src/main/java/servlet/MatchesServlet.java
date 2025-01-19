@@ -18,8 +18,17 @@ public class MatchesServlet extends HttpServlet {
     private final MatchService matchService = MatchServiceFactory.getMatchService();
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        System.out.println("MatchesServlet doGet");
         List<MatchResponseDto> matches = matchService.getAll();
-        req.getRequestDispatcher("/matches.html").forward(req, resp);
+        req.setAttribute("matches", matches);
+        req.getRequestDispatcher("/matches.jsp").forward(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    String playerName = req.getParameter("name");
+    List<MatchResponseDto> matches = matchService.findMatchesByPlayerName(playerName);
+    req.setAttribute("matches", matches);
+    req.getRequestDispatcher("/matches.jsp").forward(req, resp);
     }
 }

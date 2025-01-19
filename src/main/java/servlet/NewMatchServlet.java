@@ -23,7 +23,7 @@ public class NewMatchServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/new-match.html").forward(req, resp);
+        req.getRequestDispatcher("/new-match.jsp").forward(req, resp);
     }
 
     @Override
@@ -31,8 +31,7 @@ public class NewMatchServlet extends HttpServlet {
         String firstPlayerName = req.getParameter("playerOne");
         String secondPlayerName = req.getParameter("playerTwo");
 
-        validator.validatePlayerName(firstPlayerName);//not implemented should throw exceptions
-        validator.validatePlayerName(secondPlayerName);
+        validator.validate(firstPlayerName, secondPlayerName);
 
         playerService.createIfNotExists(firstPlayerName);
         playerService.createIfNotExists(secondPlayerName);

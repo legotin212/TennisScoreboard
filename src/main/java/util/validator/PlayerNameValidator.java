@@ -9,20 +9,30 @@ public class PlayerNameValidator {
     private static final int MAX_NAME_LENGTH = 45;
     private static final int MIN_NAME_LENGTH = 2;
 
-    public void validatePlayerName(String playerName) {
+    public void validate(String playerOneName, String playerTwoName) {
+        checkIfEquals(playerOneName, playerTwoName);
+        validatePlayerName(playerOneName);
+        validatePlayerName(playerTwoName);
+    }
+
+    private void checkIfEquals(String playerName, String otherPlayerName) {
+        if(playerName.equals(otherPlayerName)) {
+            throw new WrongArgumentException("Player names should not be equal");
+        }
+    }
+
+    private void validatePlayerName(String playerName) {
         if(!checkHasNameAndSurname(playerName)) {
             throw new WrongArgumentException("PLayer name should contain name and surname separated by space");
         }
 
         if (!containsOnlyLatinAndHyphen(playerName)) {
-            throw new WrongArgumentException("Name should contain only latin digits and hyphen symbol");
+            throw new WrongArgumentException("Name should contain only latin letters and hyphen symbol");
         }
 
         if(!checkHasRightLength(playerName)) {
             throw new WrongArgumentException("Name length should be in between from 2 to 45");
         }
-
-
     }
 
     private boolean checkHasNameAndSurname(String playerName) {

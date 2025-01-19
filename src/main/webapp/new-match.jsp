@@ -1,3 +1,5 @@
+<%@ page isELIgnored="false" %>
+
 <html>
 <head>
     <meta charset="UTF-8">
@@ -34,7 +36,7 @@
             <div class="new-match-image"></div>
             <div class="form-container center">
                 <form method="post" action="#">
-                    <p style="color: red;">Sample error message</p>
+                    <p class="error">${requestScope.error}</p> <!-- Выводим переданное сообщение об ошибке -->
                     <label class="label-player" for="playerOne">Player one</label>
                     <input id="playerOne" class="input-player" placeholder="Name" type="text" name="playerOne" required title="Enter a name">
 

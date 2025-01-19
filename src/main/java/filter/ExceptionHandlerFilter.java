@@ -21,7 +21,7 @@ public class ExceptionHandlerFilter extends HttpFilter {
         }
         catch(WrongArgumentException e){
             req.setAttribute("error", e.getMessage());
-            req.getRequestDispatcher("new-match.html").forward(req, res);
+            req.getRequestDispatcher("new-match.jsp").forward(req, res);
         }
     }
 }

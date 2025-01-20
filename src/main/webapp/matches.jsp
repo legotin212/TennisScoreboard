@@ -33,15 +33,21 @@
 <main>
     <div class="container">
         <h1>Matches</h1>
-        <div class="input-container">
-            <input class="input-filter" placeholder="Filter by name" type="text" />
-            <div>
-                <a href="#">
-                    <button class="btn-filter">Reset Filter</button>
-                </a>
-            </div>
-        </div>
+        <div class="container">
+            <h1>Matches</h1>
+            <div class="input-container">
 
+                <form class="form-matches" method="post" action="${pageContext.request.contextPath}/matches">
+<%--                    <input type="hidden" name="page" value="1">--%>
+                    <input class="input-filter" placeholder="Filter by name" type="text" name="name" />
+                </form>
+
+                <div>
+                    <a href="${pageContext.request.contextPath}/matches?page=1">
+                        <button class="btn-filter">Reset Filter</button>
+                    </a>
+                </div>
+            </div>
         <table class="table-matches">
             <tr>
                 <th>Player One</th>
@@ -57,19 +63,6 @@
             </c:forEach>
         </table>
 
-        <div class="pagination">
-            <c:if test="${currentPage > 1}">
-                <a class="prev" href="matches?page=${currentPage - 1}"> < </a>
-            </c:if>
-
-            <c:forEach var="i" begin="1" end="${totalPages}">
-                <a class="num-page ${i == currentPage ? 'current' : ''}" href="matches?page=${i}">${i}</a>
-            </c:forEach>
-
-            <c:if test="${currentPage < totalPages}">
-                <a class="next" href="matches?page=${currentPage + 1}"> > </a>
-            </c:if>
-        </div>
     </div>
 </main>
 

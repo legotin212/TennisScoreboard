@@ -16,6 +16,7 @@ public class OngoingMatch {
 
     private boolean isGameDeuce;
     private boolean isTieBreak;
+    private boolean isFinished = false;
 
     public OngoingMatch(UUID matchUUID, Integer playerOneID, Integer playerTwoID) {
         this.uuid = matchUUID;
@@ -70,6 +71,12 @@ public class OngoingMatch {
         return playerScores.get(playerTwoId);
     }
 
+    public void setFinished() {
+        this.isFinished = true;
+    }
 
+    public boolean isFinished() {
+        return isFinished;
+    }
 
 }

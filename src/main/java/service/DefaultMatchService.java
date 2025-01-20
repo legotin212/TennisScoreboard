@@ -12,7 +12,6 @@ import repository.PlayerRepository;
 import service.mapper.MatchResponseDtoMapper;
 import service.mapper.ScoreDtoMapper;
 import service.model.OngoingMatch;
-import service.model.Score;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -92,6 +91,8 @@ public class DefaultMatchService implements MatchService{
 
         return new ScoreResponseDto(score,playerOneName,playerTwoName,playerOneID,playerTwoID);
     }
+
+
 
     private List<Player> getPLayersForMatch(OngoingMatch match) {
         Optional<Player> playerOne = playerRepository.findById(match.getPlayerOneId());

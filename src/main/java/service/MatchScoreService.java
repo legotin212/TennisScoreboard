@@ -73,8 +73,8 @@ public class MatchScoreService {
     private void addSet(OngoingMatch currentMatch, Integer playerId){
         winner.increasePlayerSet();
         if (winner.getSet() == SETS_TO_WIN_MATCH){
-            MatchService matchService = MatchServiceFactory.getMatchService();
-            matchService.endMatch(currentMatch, playerId);
+            currentMatch.setFinished();
+            MatchServiceFactory.getMatchService().endMatch(currentMatch, playerId);
         }
     }
 

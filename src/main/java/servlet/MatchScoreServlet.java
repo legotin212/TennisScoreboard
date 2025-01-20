@@ -18,13 +18,13 @@ import java.util.UUID;
 @WebServlet("/match-score")
 public class MatchScoreServlet extends HttpServlet {
     private MatchService matchService = MatchServiceFactory.getMatchService();
+    MatchScoreService matchScoreService = new MatchScoreService();
 
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getParameter("matchUUID");
         UUID matchUUID = UUID.fromString(request.getParameter("matchUUID"));///Валидация
-
         OngoingMatch match = matchService.getOngoingMatch(matchUUID);
         ScoreResponseDto score =  matchService.getScoreResponseDto(match);
 
@@ -43,16 +43,18 @@ public class MatchScoreServlet extends HttpServlet {
         Integer playerId = Integer.parseInt(req.getParameter("playerId"));
 
         OngoingMatch match = matchService.getOngoingMatch(matchUUID);
-        MatchScoreService matchScoreService = new MatchScoreService();
         matchScoreService.addPointToPlayer(match, playerId);
 
-        OngoingMatch m = matchService.getOngoingMatch(matchUUID);
-        ScoreResponseDto score =  matchService.getScoreResponseDto(m);
-
-        req.setAttribute("playerScores", score);
-        req.setAttribute("matchUUID", matchUUID);
-        RequestDispatcher dispatcher = req.getRequestDispatcher("match-score.jsp" );
-        dispatcher.forward(req, resp);
+        if(match.isFinished()){
+            resp.sendRedirect(req.getContextPath() + "/matches");
+        }
+        else {
+            ScoreResponseDto score = matchService.getScoreResponseDto(match);
+            req.setAttribute("playerScores", score);
+            req.setAttribute("matchUUID", matchUUID);
+            RequestDispatcher dispatcher = req.getRequestDispatcher("match-score.jsp");
+            dispatcher.forward(req, resp);
+        }
     }
 }
 

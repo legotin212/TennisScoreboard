@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" build-on-make="true" name="TennisScoreboard:war4">
+    <output-path>$PROJECT_DIR$/../nnn</output-path>
+    <root id="archive" name="TennisScoreboard_war.war">
+      <element id="artifact" artifact-name="TennisScoreboard:war exploded" />
+    </root>
+  </artifact>
+</component>

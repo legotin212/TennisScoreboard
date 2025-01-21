@@ -31,6 +31,11 @@ public class MatchScoreService {
              return;
        }
 
+        if(currentMatch.isTieBreak()){
+            addPointToTieBreak(currentMatch, playerId);
+            return;
+        }
+
        if(winner.getPoint() == POINTS_TO_DEUCE && looser.getPoint() == POINTS_TO_DEUCE) {
            currentMatch.setGameDeuce();
            addPointToGameDeuce(currentMatch, playerId);
@@ -49,14 +54,9 @@ public class MatchScoreService {
 
     private void addGame(OngoingMatch currentMatch, Integer playerId){
 
-        if(currentMatch.isTieBreak()){
-            addPointToTieBreak(currentMatch, playerId);
-            return;
-        }
-
-        if(winner.getGame() == GAMES_TO_WIN_SET && looser.getGame() == GAMES_TO_WIN_SET){
+        if(winner.getGame() == GAMES_TO_TIE_BREAK && looser.getGame() == GAMES_TO_WIN_SET){
             currentMatch.setTieBreak();
-            resetGames(currentMatch);
+            winner.increasePlayerGame();
             addPointToTieBreak(currentMatch, playerId);
             return;
         }
@@ -96,11 +96,12 @@ public class MatchScoreService {
 
     private void addPointToTieBreak(OngoingMatch currentMatch, Integer playerId){
 
-        winner.increasePlayerGame();
+        winner.increasePlayerPoint();
 
-        if(winner.getGame() >= POINTS_TO_WIN_TIE_BREAK && looser.getGame() <= winner.getGame() - DIFF_TO_WIN_TIE_BREAK){
-            resetGames(currentMatch);
+        if(winner.getPoint() >= POINTS_TO_WIN_TIE_BREAK && looser.getPoint() <= winner.getPoint() - DIFF_TO_WIN_TIE_BREAK){
+            resetPoints(currentMatch);
             currentMatch.endTieBreak();
+            resetGames(currentMatch);
             addSet(currentMatch, playerId);
         }
 

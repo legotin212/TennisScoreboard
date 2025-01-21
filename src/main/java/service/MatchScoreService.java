@@ -2,8 +2,8 @@ package service;
 
 import lombok.NoArgsConstructor;
 import service.factory.OngoingMatchServiceFactory;
-import service.model.OngoingMatch;
-import service.model.Score;
+import service.servicemodel.OngoingMatch;
+import service.servicemodel.Score;
 
 @NoArgsConstructor
 public class MatchScoreService {

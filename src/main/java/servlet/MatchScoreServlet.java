@@ -4,7 +4,7 @@ import dto.ScoreResponseDto;
 import service.MatchScoreService;
 import service.OngoingMatchService;
 import service.factory.OngoingMatchServiceFactory;
-import service.model.OngoingMatch;
+import service.servicemodel.OngoingMatch;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

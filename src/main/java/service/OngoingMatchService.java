@@ -1,10 +1,8 @@
 package service;
 
-import dto.MatchResponseDto;
 import dto.ScoreResponseDto;
-import service.model.OngoingMatch;
+import service.servicemodel.OngoingMatch;
 
-import java.util.List;
 import java.util.UUID;
 
 public interface OngoingMatchService {

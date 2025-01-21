@@ -5,13 +5,14 @@ import dto.ScoreResponseDto;
 import entity.Match;
 import entity.Player;
 import exception.MatchNotFoundException;
+import mapper.OngoingMatchToMatchMapper;
+import mapper.ScoreDtoMapper;
 import repository.DefaultMatchRepository;
 import repository.DefaultPlayerRepository;
 import repository.MatchRepository;
 import repository.PlayerRepository;
-import service.mapper.OngoingMatchToMatchMapper;
-import service.mapper.ScoreDtoMapper;
-import service.model.OngoingMatch;
+
+import service.servicemodel.OngoingMatch;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

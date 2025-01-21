@@ -1,8 +1,8 @@
-package service.mapper;
+package mapper;
 
 import dto.ScoreDto;
-import service.model.OngoingMatch;
-import service.model.Score;
+import service.servicemodel.OngoingMatch;
+import service.servicemodel.Score;
 
 public class ScoreDtoMapper {
 

@@ -1,4 +1,4 @@
-package service.model;
+package service.servicemodel;
 
 import lombok.Getter;
 

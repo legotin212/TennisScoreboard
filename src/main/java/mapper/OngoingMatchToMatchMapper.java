@@ -1,8 +1,8 @@
-package service.mapper;
+package mapper;
 
 import entity.Match;
 import entity.Player;
-import service.model.OngoingMatch;
+import service.servicemodel.OngoingMatch;
 
 import java.util.List;
 

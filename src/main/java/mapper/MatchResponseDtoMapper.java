@@ -1,4 +1,4 @@
-package service.mapper;
+package mapper;
 
 import dto.MatchResponseDto;
 import entity.Match;

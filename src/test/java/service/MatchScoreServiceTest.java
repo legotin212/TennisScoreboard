@@ -2,7 +2,7 @@ package service;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import service.model.OngoingMatch;
+import service.servicemodel.OngoingMatch;
 import java.util.UUID;
 import static junit.framework.Assert.*;
 

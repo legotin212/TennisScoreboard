@@ -26,7 +26,7 @@ public class ExceptionHandlerFilter extends HttpFilter {
         }
 
         catch (MatchNotFoundException e){
-            req.getRequestDispatcher("matches.jsp").forward(req, res);
+            req.getRequestDispatcher("/matches").forward(req, res);
         }
     }
 }

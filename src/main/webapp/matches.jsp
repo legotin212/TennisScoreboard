@@ -78,7 +78,7 @@
                     </c:choose>
                 </c:forEach>
 
-                <c:if test="${currentPage < totalMatches / pageSize + (totalMatches % pageSize > 0 ? 1 : 0)}">
+                <c:if test="${currentPage < totalMatches / pageSize + (totalMatches % pageSize > 0 ? 1 : 0) && totalMatches > pageSize}">
                     <a href="${pageContext.request.contextPath}/matches?page=${currentPage + 1}">Next</a>
                 </c:if>
             </div>

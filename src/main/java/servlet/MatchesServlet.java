@@ -24,24 +24,6 @@ public class MatchesServlet extends HttpServlet {
     private final FinishedMatchService finishedMatchService = new FinishedMatchServiceImpl();
 
     @Override
-    public void init() throws ServletException {
-        for(int i = 0; i<15; i++){
-            MatchRepository matchRepository = new DefaultMatchRepository();
-            PlayerRepository playerRepository = new DefaultPlayerRepository();
-
-            Player player = new Player("i" + i);
-            Player player2 = new Player(i + "i");
-            playerRepository.save(player);
-            playerRepository.save(player2);
-            Match match = new Match();
-            match.setWinner(player);
-            match.setPlayer1(player);
-            match.setPlayer2(player2);
-            matchRepository.save(match);
-        }
-    }
-
-    @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<MatchResponseDto> allMatches;
         String playerName = req.getParameter("name");

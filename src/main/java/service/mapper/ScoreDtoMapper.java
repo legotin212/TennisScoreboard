@@ -28,6 +28,11 @@ public class ScoreDtoMapper {
             playerTwoPoint = getDeuceValue(playerTwoScore.getPoint(), playerOneScore.getPoint());
         }
 
+        if(match.isTieBreak()){
+            playerOnePoint = String.valueOf(playerOneScore.getPoint());
+            playerTwoPoint = String.valueOf(playerTwoScore.getPoint());
+        }
+
         return new ScoreDto(playerOneSet,playerOneGame,playerOnePoint, playerTwoSet,playerTwoGame,playerTwoPoint);
 
     }
@@ -43,11 +48,11 @@ public class ScoreDtoMapper {
 
     private String getDeuceValue(int point, int opponentPoint ) {
         if(point == opponentPoint){
-            return "Равно";
+            return "DE";
         }
         if (point > opponentPoint) {
-            return "Больше";
+            return "AD ";
         }
-        return "Меньше";
+        return "40";
     }
 }

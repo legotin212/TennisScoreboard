@@ -7,11 +7,9 @@ import service.model.OngoingMatch;
 import java.util.List;
 import java.util.UUID;
 
-public interface MatchService {
+public interface OngoingMatchService {
     UUID createMatch(Integer playerOneId, Integer playerTwoId);
     OngoingMatch getOngoingMatch(UUID matchId);
     void endMatch(OngoingMatch match, Integer winnerId);
-    List<MatchResponseDto> getAll();
-    List<MatchResponseDto> findMatchesByPlayerName(String playerName);
     ScoreResponseDto getScoreResponseDto(OngoingMatch match);
 }

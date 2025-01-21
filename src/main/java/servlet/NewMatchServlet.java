@@ -1,8 +1,8 @@
 package servlet;
 
-import service.DefaultMatchService;
+import service.DefaultOngoingMatchService;
 import service.DefaultPlayerService;
-import service.MatchService;
+import service.OngoingMatchService;
 import service.PlayerService;
 import util.validator.PlayerNameValidator;
 
@@ -17,7 +17,7 @@ import java.util.UUID;
 @WebServlet("/new-match")
 public class NewMatchServlet extends HttpServlet {
 
-    private final MatchService matchService = DefaultMatchService.getInstance();
+    private final OngoingMatchService ongoingMatchService = DefaultOngoingMatchService.getInstance();
     private final PlayerNameValidator validator = new PlayerNameValidator();
     private final PlayerService playerService = new DefaultPlayerService();
 
@@ -39,7 +39,7 @@ public class NewMatchServlet extends HttpServlet {
         Integer playerOneID = playerService.findByName(firstPlayerName).get().getId();
         Integer playerTwoID = playerService.findByName(secondPlayerName).get().getId();
 
-        UUID matchUUID = matchService.createMatch(playerOneID, playerTwoID);
+        UUID matchUUID = ongoingMatchService.createMatch(playerOneID, playerTwoID);
 
         resp.sendRedirect(req.getContextPath() + "/match-score?matchUUID=" + matchUUID);
 

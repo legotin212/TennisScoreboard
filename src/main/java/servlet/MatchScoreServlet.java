@@ -2,7 +2,7 @@ package servlet;
 
 import dto.ScoreResponseDto;
 import service.MatchScoreService;
-import service.MatchService;
+import service.OngoingMatchService;
 import service.factory.MatchServiceFactory;
 import service.model.OngoingMatch;
 
@@ -17,7 +17,7 @@ import java.util.UUID;
 
 @WebServlet("/match-score")
 public class MatchScoreServlet extends HttpServlet {
-    private MatchService matchService = MatchServiceFactory.getMatchService();
+    private OngoingMatchService ongoingMatchService = MatchServiceFactory.getMatchService();
     MatchScoreService matchScoreService = new MatchScoreService();
 
 
@@ -25,8 +25,8 @@ public class MatchScoreServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getParameter("matchUUID");
         UUID matchUUID = UUID.fromString(request.getParameter("matchUUID"));///Валидация
-        OngoingMatch match = matchService.getOngoingMatch(matchUUID);
-        ScoreResponseDto score =  matchService.getScoreResponseDto(match);
+        OngoingMatch match = ongoingMatchService.getOngoingMatch(matchUUID);
+        ScoreResponseDto score =  ongoingMatchService.getScoreResponseDto(match);
 
         request.setAttribute("playerScores", score);
         request.setAttribute("matchUUID", matchUUID);
@@ -42,14 +42,14 @@ public class MatchScoreServlet extends HttpServlet {
         UUID matchUUID = UUID.fromString(req.getParameter("matchUUID"));
         Integer playerId = Integer.parseInt(req.getParameter("playerId"));
 
-        OngoingMatch match = matchService.getOngoingMatch(matchUUID);
+        OngoingMatch match = ongoingMatchService.getOngoingMatch(matchUUID);
         matchScoreService.addPointToPlayer(match, playerId);
 
         if(match.isFinished()){
             resp.sendRedirect(req.getContextPath() + "/matches");
         }
         else {
-            ScoreResponseDto score = matchService.getScoreResponseDto(match);
+            ScoreResponseDto score = ongoingMatchService.getScoreResponseDto(match);
             req.setAttribute("playerScores", score);
             req.setAttribute("matchUUID", matchUUID);
             RequestDispatcher dispatcher = req.getRequestDispatcher("match-score.jsp");

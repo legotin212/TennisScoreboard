@@ -1,12 +1,12 @@
 package service.factory;
 
-import service.DefaultMatchService;
-import service.MatchService;
+import service.DefaultOngoingMatchService;
+import service.OngoingMatchService;
 
 public class MatchServiceFactory {
-    private static final MatchService INSTANCE = DefaultMatchService.getInstance();
+    private static final OngoingMatchService INSTANCE = DefaultOngoingMatchService.getInstance();
 
-    public static MatchService getMatchService() {
+    public static OngoingMatchService getMatchService() {
         return INSTANCE;
     }
 }

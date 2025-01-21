@@ -7,7 +7,9 @@ import repository.DefaultMatchRepository;
 import repository.DefaultPlayerRepository;
 import repository.MatchRepository;
 import repository.PlayerRepository;
-import service.MatchService;
+import service.DefaultFinishedMatchService;
+import service.FinishedMatchService;
+import service.OngoingMatchService;
 import service.factory.MatchServiceFactory;
 
 import javax.servlet.ServletException;
@@ -21,7 +23,7 @@ import java.util.List;
 @WebServlet("/matches")
 public class MatchesServlet extends HttpServlet {
     private static final int PAGE_SIZE = 5;
-    private final MatchService matchService = MatchServiceFactory.getMatchService();
+    private final FinishedMatchService finishedMatchService = new DefaultFinishedMatchService();
 
     @Override
     public void init() throws ServletException {
@@ -53,10 +55,10 @@ public class MatchesServlet extends HttpServlet {
         }
 
         if(playerName!=null){
-            allMatches = matchService.findMatchesByPlayerName(playerName);
+            allMatches = finishedMatchService.findMatchesByPlayerName(playerName);
         }
         else {
-            allMatches = matchService.getAll();
+            allMatches = finishedMatchService.getAll();
         }
         int totalMatches = allMatches.size();
         int startIndex = (page - 1) * PAGE_SIZE;

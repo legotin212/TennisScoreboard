@@ -9,7 +9,7 @@ import service.mapper.MatchResponseDtoMapper;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DefaultFinishedMatchService implements FinishedMatchService {
+public class FinishedMatchServiceImpl implements FinishedMatchService {
     private final MatchRepository matchRepository = new DefaultMatchRepository();
 
     @Override

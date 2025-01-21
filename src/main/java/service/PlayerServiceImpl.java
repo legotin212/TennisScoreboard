@@ -7,10 +7,10 @@ import repository.PlayerRepository;
 import javax.transaction.Transactional;
 import java.util.Optional;
 
-public class DefaultPlayerService implements PlayerService {
+public class PlayerServiceImpl implements PlayerService {
     private final PlayerRepository playerRepository = new DefaultPlayerRepository();
 
-    public DefaultPlayerService() {
+    public PlayerServiceImpl() {
     }
 
     @Override

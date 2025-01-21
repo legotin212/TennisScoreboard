@@ -1,6 +1,5 @@
 package service;
 
-import dto.MatchResponseDto;
 import dto.ScoreDto;
 import dto.ScoreResponseDto;
 import entity.Match;
@@ -9,7 +8,6 @@ import repository.DefaultMatchRepository;
 import repository.DefaultPlayerRepository;
 import repository.MatchRepository;
 import repository.PlayerRepository;
-import service.mapper.MatchResponseDtoMapper;
 import service.mapper.OngoingMatchToMatchMapper;
 import service.mapper.ScoreDtoMapper;
 import service.model.OngoingMatch;
@@ -17,20 +15,20 @@ import service.model.OngoingMatch;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class DefaultOngoingMatchService implements OngoingMatchService {
+public class OngoingMatchServiceImpl implements OngoingMatchService {
     private static final Map<UUID,OngoingMatch> matches = new ConcurrentHashMap<>();
     private final PlayerRepository playerRepository;
     private final MatchRepository matchRepository;
-    private static DefaultOngoingMatchService instance;
+    private static OngoingMatchServiceImpl instance;
 
-    public synchronized static DefaultOngoingMatchService getInstance() {
+    public synchronized static OngoingMatchServiceImpl getInstance() {
         if(instance == null) {
-            instance = new DefaultOngoingMatchService(new DefaultPlayerRepository(), new DefaultMatchRepository());
+            instance = new OngoingMatchServiceImpl(new DefaultPlayerRepository(), new DefaultMatchRepository());
         }
         return instance;
     }
 
-    public DefaultOngoingMatchService(PlayerRepository playerRepository, MatchRepository matchRepository) {
+    public OngoingMatchServiceImpl(PlayerRepository playerRepository, MatchRepository matchRepository) {
         this.playerRepository = playerRepository;
         this.matchRepository = matchRepository;
     }

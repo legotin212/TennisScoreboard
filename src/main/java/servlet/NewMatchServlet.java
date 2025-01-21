@@ -1,7 +1,7 @@
 package servlet;
 
-import service.DefaultOngoingMatchService;
-import service.DefaultPlayerService;
+import service.OngoingMatchServiceImpl;
+import service.PlayerServiceImpl;
 import service.OngoingMatchService;
 import service.PlayerService;
 import util.validator.PlayerNameValidator;
@@ -17,9 +17,9 @@ import java.util.UUID;
 @WebServlet("/new-match")
 public class NewMatchServlet extends HttpServlet {
 
-    private final OngoingMatchService ongoingMatchService = DefaultOngoingMatchService.getInstance();
+    private final OngoingMatchService ongoingMatchService = OngoingMatchServiceImpl.getInstance();
     private final PlayerNameValidator validator = new PlayerNameValidator();
-    private final PlayerService playerService = new DefaultPlayerService();
+    private final PlayerService playerService = new PlayerServiceImpl();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

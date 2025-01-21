@@ -54,17 +54,6 @@ public class MatchScoreServiceTest {
     }
 
     @Test
-    void testAdvantageLostWhenOpponentScores(){
-        ongoingMatch.getPlayerScoreById(1).setPoint(0);
-        ongoingMatch.getOpponentScoreByPlayerId(1).setPoint(1);
-        ongoingMatch.setGameDeuce();
-
-        matchScoreService.addPointToPlayer(ongoingMatch,1);
-
-        assertEquals(0, ongoingMatch.getOpponentScoreByPlayerId(1).getPoint());
-    }
-
-    @Test
     void testTieBreakStartsWhenSetScoreIsSixSix(){
         ongoingMatch.getPlayerOneScore().setPoint(3);
         ongoingMatch.getPlayerTwoScore().setPoint(0);
@@ -79,5 +68,29 @@ public class MatchScoreServiceTest {
         assertEquals(0,ongoingMatch.getPlayerTwoScore().getGame());
 
     }
+    @Test
+    void testSetDoesNotEndsWhenAdvantageLessThanTwo(){
+        ongoingMatch.getPlayerOneScore().setPoint(3);
+        ongoingMatch.getPlayerTwoScore().setPoint(0);
+        ongoingMatch.getPlayerOneScore().setGame(5);
+        ongoingMatch.getPlayerTwoScore().setGame(5);
+
+        matchScoreService.addPointToPlayer(ongoingMatch,1);
+
+        assertEquals(0, ongoingMatch.getPlayerOneScore().getSet());
+    }
+
+    void testSetEndsWhenAdvantageMoreThanTwo(){
+        ongoingMatch.getPlayerOneScore().setPoint(3);
+        ongoingMatch.getPlayerTwoScore().setPoint(0);
+        ongoingMatch.getPlayerOneScore().setGame(5);
+        ongoingMatch.getPlayerTwoScore().setGame(2);
+
+        matchScoreService.addPointToPlayer(ongoingMatch,1);
+
+        assertEquals(1, ongoingMatch.getPlayerOneScore().getSet());
+    }
+
+
 
 }

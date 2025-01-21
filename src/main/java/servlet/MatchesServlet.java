@@ -7,10 +7,8 @@ import repository.DefaultMatchRepository;
 import repository.DefaultPlayerRepository;
 import repository.MatchRepository;
 import repository.PlayerRepository;
-import service.DefaultFinishedMatchService;
+import service.FinishedMatchServiceImpl;
 import service.FinishedMatchService;
-import service.OngoingMatchService;
-import service.factory.MatchServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,7 +21,7 @@ import java.util.List;
 @WebServlet("/matches")
 public class MatchesServlet extends HttpServlet {
     private static final int PAGE_SIZE = 5;
-    private final FinishedMatchService finishedMatchService = new DefaultFinishedMatchService();
+    private final FinishedMatchService finishedMatchService = new FinishedMatchServiceImpl();
 
     @Override
     public void init() throws ServletException {

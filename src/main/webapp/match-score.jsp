@@ -64,6 +64,7 @@
                     <td class="table-text">${playerScores.score.playerTwoSet}</td>
                     <td class="table-text">${playerScores.score.playerTwoGame}</td>
                     <td class="table-text">${playerScores.score.playerTwoPoint}</td>
+                    <td class="table-text">
                     </td>
                     <td class="table-text">
                         <form method="post" action="${pageContext.request.contextPath}/match-score?matchUUID=${requestScope.matchUUID}">

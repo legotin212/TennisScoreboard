@@ -3,7 +3,7 @@ package servlet;
 import dto.ScoreResponseDto;
 import service.MatchScoreService;
 import service.OngoingMatchService;
-import service.factory.MatchServiceFactory;
+import service.factory.OngoingMatchServiceFactory;
 import service.model.OngoingMatch;
 
 import javax.servlet.RequestDispatcher;
@@ -17,15 +17,17 @@ import java.util.UUID;
 
 @WebServlet("/match-score")
 public class MatchScoreServlet extends HttpServlet {
-    private OngoingMatchService ongoingMatchService = MatchServiceFactory.getMatchService();
+    private OngoingMatchService ongoingMatchService = OngoingMatchServiceFactory.getMatchService();
     MatchScoreService matchScoreService = new MatchScoreService();
 
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getParameter("matchUUID");
-        UUID matchUUID = UUID.fromString(request.getParameter("matchUUID"));///Валидация
+        UUID matchUUID = UUID.fromString(request.getParameter("matchUUID"));
+
         OngoingMatch match = ongoingMatchService.getOngoingMatch(matchUUID);
+
         ScoreResponseDto score =  ongoingMatchService.getScoreResponseDto(match);
 
         request.setAttribute("playerScores", score);

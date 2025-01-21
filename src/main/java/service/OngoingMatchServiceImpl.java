@@ -4,6 +4,7 @@ import dto.ScoreDto;
 import dto.ScoreResponseDto;
 import entity.Match;
 import entity.Player;
+import exception.MatchNotFoundException;
 import repository.DefaultMatchRepository;
 import repository.DefaultPlayerRepository;
 import repository.MatchRepository;
@@ -21,16 +22,20 @@ public class OngoingMatchServiceImpl implements OngoingMatchService {
     private final MatchRepository matchRepository;
     private static OngoingMatchServiceImpl instance;
 
-    public synchronized static OngoingMatchServiceImpl getInstance() {
-        if(instance == null) {
-            instance = new OngoingMatchServiceImpl(new DefaultPlayerRepository(), new DefaultMatchRepository());
+    public static OngoingMatchServiceImpl getInstance() {
+        if (instance == null) {
+            synchronized (OngoingMatchServiceImpl.class) {
+                if (instance == null) {
+                    instance = new OngoingMatchServiceImpl();
+                }
+            }
         }
         return instance;
     }
 
-    public OngoingMatchServiceImpl(PlayerRepository playerRepository, MatchRepository matchRepository) {
-        this.playerRepository = playerRepository;
-        this.matchRepository = matchRepository;
+    private OngoingMatchServiceImpl() {
+        this.playerRepository = new DefaultPlayerRepository();
+        this.matchRepository = new DefaultMatchRepository();
     }
 
     @Override
@@ -45,7 +50,7 @@ public class OngoingMatchServiceImpl implements OngoingMatchService {
         if(matches.containsKey(matchId)) {
             return matches.get(matchId);
         }
-        throw new IllegalArgumentException("Match not found");
+        throw new MatchNotFoundException("Match with UUID " + matchId + " not found");
     }
 
     @Override

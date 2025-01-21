@@ -1,7 +1,7 @@
 package service;
 
 import lombok.NoArgsConstructor;
-import service.factory.MatchServiceFactory;
+import service.factory.OngoingMatchServiceFactory;
 import service.model.OngoingMatch;
 import service.model.Score;
 
@@ -74,7 +74,7 @@ public class MatchScoreService {
         winner.increasePlayerSet();
         if (winner.getSet() == SETS_TO_WIN_MATCH){
             currentMatch.setFinished();
-            MatchServiceFactory.getMatchService().endMatch(currentMatch, playerId);
+            OngoingMatchServiceFactory.getMatchService().endMatch(currentMatch, playerId);
         }
     }
 

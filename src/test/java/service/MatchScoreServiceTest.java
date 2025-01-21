@@ -54,20 +54,42 @@ public class MatchScoreServiceTest {
     }
 
     @Test
-    void testTieBreakStartsWhenSetScoreIsSixSix(){
+    void testTieBreakPlayerWithSevenShouldWinWhenOpponentHasFive(){
+        ongoingMatch.getPlayerScoreById(1).setPoint(6);
+        ongoingMatch.getOpponentScoreByPlayerId(1).setPoint(5);
+        ongoingMatch.setTieBreak();
+
+        matchScoreService.addPointToPlayer(ongoingMatch,1);
+
+        assertFalse(ongoingMatch.isTieBreak());
+
+    }
+    @Test
+    void testTieBreakStartsWhenGameScoreIsSixSix(){
         ongoingMatch.getPlayerOneScore().setPoint(3);
         ongoingMatch.getPlayerTwoScore().setPoint(0);
-        ongoingMatch.getPlayerOneScore().setGame(6);
+        ongoingMatch.getPlayerOneScore().setGame(5);
         ongoingMatch.getPlayerTwoScore().setGame(6);
 
         matchScoreService.addPointToPlayer(ongoingMatch, 1);
 
         assertTrue(ongoingMatch.isTieBreak());
         assertEquals(0, ongoingMatch.getPlayerOneScore().getSet());
-        assertEquals(1,ongoingMatch.getPlayerOneScore().getGame());
-        assertEquals(0,ongoingMatch.getPlayerTwoScore().getGame());
+        assertEquals(6,ongoingMatch.getPlayerOneScore().getGame());
+        assertEquals(6,ongoingMatch.getPlayerTwoScore().getGame());
 
     }
+    @Test
+    void testWhenPlayerGetsSevenGamesAndOpponentGotSixSetShouldEnd(){
+        ongoingMatch.getPlayerOneScore().setPoint(3);
+        ongoingMatch.getPlayerTwoScore().setGame(5);
+        ongoingMatch.getPlayerOneScore().setGame(6);
+
+        matchScoreService.addPointToPlayer(ongoingMatch,1);
+
+        assertEquals(1, ongoingMatch.getPlayerScoreById(1).getSet());
+    }
+
     @Test
     void testSetDoesNotEndsWhenAdvantageLessThanTwo(){
         ongoingMatch.getPlayerOneScore().setPoint(3);
